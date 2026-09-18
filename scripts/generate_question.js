@@ -26,21 +26,35 @@ async function generateWithAI(topic, usedAnswers) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      model: "llama-3.1-8b-instant",
+      model: "openai/gpt-oss-120b",
       messages: [{
         role: "user",
-        content: `Generate a ${topic} science word puzzle for school students (Class 5-10).
+        content: `You must NOT pick a topic from these domains, since they have already been used recently: Mathematics, Physics, Mechanical Engineering, Food, Cooking, Cuisine.
 
-Rules:
-- Answer must be ONE word, 4-6 letters, only alphabets, no spaces
-- Must strictly belong to ${topic}
+You are creating a daily riddle-style word puzzle. The DIFFICULTY should suit a sharp college-level solver — but the TOPIC must come from a domain you have not already used.
+
+Step 1 — Pick a topic:
+- Pick ONE topic from a domain completely different from the banned list above — think outside academics and food entirely: it could be something from sport, travel, an internet phenomenon, a craft, a historical event, an animal, a place, a tool, a tradition, an art form, a game, a myth, an object, a profession, or literally anything else that exists
+- Be specific, not generic
+- If your first instinct is anything close to the banned domains, discard it and pick something further away
+
+Step 2 — Pick an answer:
+- ONE common, well-known term related to that topic, 4-6 letters, only alphabets, no spaces
 - Do NOT use any of these already-used answers: ${[...usedAnswers].join(', ')}
-- Return ONLY valid JSON, no explanation, no markdown:
+
+Step 3 — Write the riddle:
+- Exactly 3 clue lines
+- Each line must reference a DIFFERENT angle of the concept (a cause/mechanism, a related fact or exception, a consequence or real-world detail) — no single line should give it away alone
+- Assume the solver is sharp and college-educated — clues can be genuinely challenging, layered, and require real thought, regardless of topic
+- Avoid the answer word or its obvious synonym in any line
+- Should take real thought (1-3 minutes), not be instantly obvious, and not require obscure trivia nobody would know
+
+Return ONLY valid JSON, no explanation, no markdown:
 
 {
-  "answer": "gravity",
-  "question": "Q. I am the force that pulls objects toward the ground. What am I?",
-  "category": "${topic}"
+  "answer": "...",
+  "question": "Q. ...\\nQ. ...\\nQ. ...",
+  "category": "..."
 }`
       }],
       temperature: 0.9

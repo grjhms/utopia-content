@@ -43,17 +43,17 @@ Step 2 — Pick an answer:
 - Do NOT use any of these already-used answers: ${[...usedAnswers].join(', ')}
 
 Step 3 — Write the riddle:
-- Exactly 3 clue lines
-- Each line must reference a DIFFERENT angle of the concept (a cause/mechanism, a related fact or exception, a consequence or real-world detail) — no single line should give it away alone
-- Assume the solver is sharp and college-educated — clues can be genuinely challenging, layered, and require real thought, regardless of topic
-- Avoid the answer word or its obvious synonym in any line
-- Should take real thought (1-3 minutes), not be instantly obvious, and not require obscure trivia nobody would know
+- Write exactly ONE clue line as the question — not multiple lines, not a list, just one single riddle sentence
+- The line must not be a dictionary-style definition — make it require real inference, not simple recall
+- Assume the solver is sharp and college-educated — the clue can be genuinely challenging and layered, regardless of topic
+- Avoid the answer word or its obvious synonym in the line
+- Should take real thought (30-90 seconds), not be instantly obvious, and not require obscure trivia nobody would know
 
 Return ONLY valid JSON, no explanation, no markdown:
 
 {
   "answer": "...",
-  "question": "Q. ...\\nQ. ...\\nQ. ...",
+  "question": "Q. ...",
   "category": "..."
 }`
       }],
@@ -89,7 +89,7 @@ Return ONLY valid JSON, no explanation, no markdown:
 
   return {
     answer,
-    question: questionMatch[1].trim(),
+    question: questionMatch[1].trim().replace(/\\n/g, '\n'),
     category: categoryMatch[1].trim()
   };
 }
